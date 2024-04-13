@@ -4,7 +4,7 @@ Travel Manager Application
 
 ## Team Agreements
 
-**TEAM**
+- **TEAM**:
 Evan Cheng, Wajiha Khan, Demarquies Jolley, Amanda Marquez, Ryan Potts
 
 **Utilizing Strengths in Project Execution**:
