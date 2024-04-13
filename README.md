@@ -4,6 +4,9 @@ Travel Manager Application
 
 ## Team Agreements
 
+**TEAM**
+Evan Cheng, Wajiha Khan, Demarquies Jolley, Amanda Marquez, Ryan Potts
+
 **Utilizing Strengths in Project Execution**:
 
 - Ryan (Vision, Unconventional Ideas): Lead brainstorming sessions for innovative project concepts. Translate vision into actionable plans.
