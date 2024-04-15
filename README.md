@@ -2,7 +2,8 @@
 
 Travel Manager Application
 
- [Domain Model](./domain-model.md)
+ - [Domain Model](./domain-model.md)
+ - [Database Schema Diagram](./database-schema-diagram.md)
 
 ## Team Agreements
 
