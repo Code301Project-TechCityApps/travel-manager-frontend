@@ -11,6 +11,7 @@ function App(props) {
         <div>
           Login or Logout with one component <AuthButtons />
         </div>
+        
 
       
         {props.auth0.isAuthenticated &&
