@@ -1,6 +1,8 @@
-# travel-manager
+# Travel-manager
 
 Travel Manager Application
+
+ [Domain Model](./domain-model.md)
 
 ## Team Agreements
 
