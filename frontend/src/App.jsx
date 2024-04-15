@@ -1,9 +1,7 @@
 import { withAuth0 } from '@auth0/auth0-react';
 import AuthButtons from './Auth/AuthButtons';
-import Login from './Auth/Login';
-import Logout from './Auth/Logout';
-import Profile from './Profile';
-import Content from './Content';
+// import Login from './Auth/Login';
+// import Logout from './Auth/Logout';
 
 function App(props) {
     return(
@@ -11,13 +9,12 @@ function App(props) {
         <div>
           Login or Logout with one component <AuthButtons />
         </div>
-        
+
 
       
         {props.auth0.isAuthenticated &&
           <>
-            <Profile />
-            <Content />
+          <h1>Testing?</h1>
           </>
         }
       </>
