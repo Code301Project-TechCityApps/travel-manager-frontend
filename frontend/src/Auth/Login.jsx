@@ -10,6 +10,7 @@ function Login() {
   function handleLogin() {
     loginWithRedirect();
   }
+  
 
   return (!isAuthenticated &&
     <button onClick={handleLogin}>Log in</button>

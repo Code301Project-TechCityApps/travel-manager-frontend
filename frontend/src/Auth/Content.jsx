@@ -11,6 +11,7 @@ function Content(props) {
   const [books, setBooks] = useState([]);
 
   async function getBooks() {
+    
 
     const res = await props.auth0.getIdTokenClaims();
     console.log('res', res);

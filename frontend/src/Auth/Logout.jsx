@@ -11,6 +11,7 @@ function LogoutButton() {
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
+  
 
   return isAuthenticated &&
       <button onClick={handleLogout}>Log out</button>
