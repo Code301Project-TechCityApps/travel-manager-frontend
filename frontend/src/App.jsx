@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { withAuth0 } from '@auth0/auth0-react';
+import AuthButtons from './Auth/AuthButtons';
+import Login from './Auth/Login';
+import Logout from './Auth/Logout';
+import Profile from './Profile';
+import Content from './Content';
 
-function App() {
-  const [count, setCount] = useState(0)
+function App(props) {
+    return(
+      <>
+        <div>
+          Login or Logout with one component <AuthButtons />
+        </div>
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      
+        {props.auth0.isAuthenticated &&
+          <>
+            <Profile />
+            <Content />
+          </>
+        }
+      </>
+    )
+  }
 
-export default App
+export default withAuth0(App);
