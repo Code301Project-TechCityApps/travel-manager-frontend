@@ -20,7 +20,7 @@ function OffcanvasNavbar() {
                         <Nav className="justify-content-end flex-grow-1 pe-3">
                             <Nav.Link as={Link} to="/">Home</Nav.Link>
                             <Nav.Link as={Link} to="/currency">Currency Converter</Nav.Link>
-                            <Nav.Link as={Link} to="/translation">Translator Tool</Nav.Link>
+                            <Nav.Link as={Link} to="/translator">Translator Tool</Nav.Link>
                         </Nav>
                         {/* <Form className="d-flex">
                             <Form.Control
