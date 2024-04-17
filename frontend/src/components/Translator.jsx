@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios';
+const API = import.meta.env.VITE_SERVER_URL;
 
 function Translator() {
 
@@ -19,7 +20,7 @@ function Translator() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:3000/api/translate/translate?text=${text}&toLang=${toLang}`)
+            const response = await axios.post(`${API}/api/translate/translate?text=${text}&toLang=${toLang}`)
             console.log('response.data ', response.data);
             setTranslations(response.data);
         } catch (error) {
