@@ -6,6 +6,7 @@ import Home from './components/Home'; // Ensure the import path is correct
 import OffcanvasNavbar from './components/OffcanvasNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Translator from './components/Translator';
+import Transportation from './components/Transportation';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/translator" element={<Translator />} />
                 <Route path="/currency" element={<CurrencyConverter />} />
+                <Route path="/transportation" element={<Transportation/>}/>
             </Routes>
         </Router>
     );
