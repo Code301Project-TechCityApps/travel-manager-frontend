@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
-import CurrencyModal from './CurrencyModal'; // Make sure this path is correct
-import currencies from '../assets/currencies.json'; // Imported currencies data
+import CurrencyModal from './CurrencyModal';
+import currencies from '../assets/currencies.json'; 
 
 const API_KEY = import.meta.env.VITE_LOCATION_API_KEY;
 
@@ -13,7 +13,7 @@ function Currency() {
     const [latestRates, setLatestRates] = useState({});
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [activeField, setActiveField] = useState('from'); // Track which field triggered the modal
+    const [activeField, setActiveField] = useState('from'); 
 
     const handleCurrencySelect = (currencyCode) => {
         if (activeField === 'from') {
@@ -21,11 +21,16 @@ function Currency() {
         } else {
             setToCurrency(currencyCode);
         }
-        setShowModal(false); // Close the modal after selection
+        setShowModal(false); 
     };
 
     // Function to convert currency
     const handleConvert = async () => {
+        if (!fromCurrency || !toCurrency || isNaN(amount) || amount <= 0) {
+            setError('Please ensure all fields are correctly filled and the amount is greater than zero.');
+            return;
+        }
+    
         try {
             const url = `https://api.currencybeacon.com/v1/convert?api_key=${API_KEY}&from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
             const response = await fetch(url);
@@ -34,12 +39,16 @@ function Currency() {
                 throw new Error('Failed to convert currency: ' + errorText);
             }
             const data = await response.json();
-            console.log("API data:", data);  // Log the API response data to check the structure
-            if (typeof <data className="value"></data> !== 'number') {
-                console.error('Unexpected result type:', data.value);
+            console.log("API response data:", data);  // Keep this log to confirm the structure in future
+    
+            // Accessing the 'value' from 'response' object in the API response
+            const conversionValue = data.response.value; // This assumes 'value' is correctly formatted as a number
+            if (typeof conversionValue !== 'number') {
+                console.error('Unexpected result type:', conversionValue);
                 throw new Error('Conversion result is not a number.');
             }
-            const formattedResult = Number(data.value).toFixed(2);
+    
+            const formattedResult = Number(conversionValue).toFixed(2);
             const currencySymbol = currencies.find(c => c.code === toCurrency)?.symbol || '';
             setConversionResult({
                 value: formattedResult,
@@ -50,6 +59,8 @@ function Currency() {
             setError(err.message);
         }
     };
+    
+
 
     // Function to get the latest rates
     const handleFetchRates = async (base = '', symbols = '') => {
