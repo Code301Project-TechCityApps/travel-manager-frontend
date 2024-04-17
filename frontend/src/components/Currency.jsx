@@ -15,8 +15,6 @@ function Currency() {
     const [showModal, setShowModal] = useState(false);
     const [showAllRates, setShowAllRates] = useState(false);
     const [activeField, setActiveField] = useState('from');
-    const [allRates, setAllRates] = useState({});
-
 
     const handleCurrencySelect = (currencyCode) => {
         if (activeField === 'from') {
@@ -56,7 +54,7 @@ function Currency() {
     };
 
     const handleFetchRates = async (showAll = false) => {
-        const symbols = showAll ? '' : 'USD,EUR,JPY,GBP,CAD'; // Top 5 currencies or all
+        const symbols = showAll ? '' : 'USD,EUR,JPY,GBP,CAD';
         const url = `https://api.currencybeacon.com/v1/latest?api_key=${API_KEY}&base=${fromCurrency}&symbols=${symbols}`;
 
         try {
@@ -70,80 +68,92 @@ function Currency() {
                 return acc;
             }, {});
 
-            setLatestRates(formattedRates); // Set rates received
+            setLatestRates(formattedRates);
         } catch (err) {
             console.error('Error fetching rates:', err);
             setError(err.message);
         }
     };
 
-
     return (
-        <Container>
-            <Row>
+        <Container fluid="sm" className="p-3">
+            <Row className="mb-4">
                 <Col>
-                    <h2>Currency Converter</h2>
+                    <h2 className="text-center">Currency Converter</h2>
                     <Form>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="2">
-                                From
-                            </Form.Label>
-                            <Col sm="10">
+                        <Form.Group as={Row} className="mb-3" controlId="fromCurrency">
+                            <Form.Label column sm={3}>From</Form.Label>
+                            <Col sm={9} className="d-flex justify-content-center">
                                 <Form.Control
                                     as="input"
                                     value={fromCurrency}
                                     readOnly
-                                    onClick={() => { setActiveField('from'); setShowModal(true); }}
+                                    onClick={() => setActiveField('from')}
+                                    aria-label="From currency"
+                                    className="w-75"
                                 />
-                                <Button onClick={() => { setActiveField('from'); setShowModal(true); }}>Select Currency</Button>
+                                <Button variant="outline-primary" className="mt-2 ms-2" onClick={() => setShowModal(true)}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="2">
-                                To
-                            </Form.Label>
-                            <Col sm="10">
+                        <Form.Group as={Row} className="mb-3" controlId="toCurrency">
+                            <Form.Label column sm={3}>To</Form.Label>
+                            <Col sm={9} className="d-flex justify-content-center">
                                 <Form.Control
                                     as="input"
                                     value={toCurrency}
                                     readOnly
-                                    onClick={() => { setActiveField('to'); setShowModal(true); }}
+                                    onClick={() => setActiveField('to')}
+                                    aria-label="To currency"
+                                    className="w-75"
                                 />
-                                <Button onClick={() => { setActiveField('to'); setShowModal(true); }}>Select Currency</Button>
+                                <Button variant="outline-primary" className="mt-2 ms-2" onClick={() => setShowModal(true)}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="2">
-                                Amount
-                            </Form.Label>
-                            <Col sm="10">
-                                <Form.Control type="number" value={amount} onChange={e => setAmount(e.target.value)} />
+                        <Form.Group as={Row} className="mb-3" controlId="amount">
+                            <Form.Label column sm={3}>Amount</Form.Label>
+                            <Col sm={9} className="d-flex justify-content-center">
+                                <Form.Control
+                                    type="number"
+                                    value={amount}
+                                    onChange={e => setAmount(e.target.value)}
+                                    aria-label="Amount to convert"
+                                    className="w-75"
+                                />
                             </Col>
                         </Form.Group>
-                        <Button onClick={handleConvert}>Convert</Button>
+                        <div className="d-flex justify-content-center">
+                            <Button variant="success" className="w-50" onClick={handleConvert}>Convert</Button>
+                        </div>
                     </Form>
                     {conversionResult && (
-                        <Alert variant="success">
+                        <Alert variant="success" className="mt-3">
                             Conversion Result: {conversionResult.symbol}{conversionResult.value}
                         </Alert>
                     )}
                 </Col>
+            </Row>
+            <Row>
                 <Col>
-                <h2>Latest Rates</h2>
-                    <Button onClick={() => handleFetchRates(false)}>Fetch Top 5 Rates</Button>
-                    <Button onClick={() => {
-                        setShowAllRates(!showAllRates);
-                        handleFetchRates(!showAllRates); // Toggle and fetch accordingly
-                    }}>
-                        {showAllRates ? 'Show Less' : 'Show All'}
-                    </Button>
+                    <h2 className="text-center mb-3">Latest Rates</h2>
+                    <div className="d-flex justify-content-center mb-2">
+                        <Button variant="primary" className="w-50" onClick={() => handleFetchRates(false)}>Fetch Top 5 Rates</Button>
+                    </div>
+                    <div className="d-flex justify-content-center mb-2">
+                        <Button variant="secondary" className="w-50" onClick={() => {
+                            setShowAllRates(!showAllRates);
+                            handleFetchRates(!showAllRates);
+                        }}>
+                            {showAllRates ? 'Show Less' : 'Show All'}
+                        </Button>
+                    </div>
                     {Object.keys(latestRates).length > 0 && (
-                        <ul>
-                            {Object.entries(latestRates)
-                                .map(([key, value]) => (
+                        <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                            <ul className="list-unstyled">
+                                {Object.entries(latestRates).map(([key, value]) => (
                                     <li key={key}>{key}: {value}</li>
                                 ))}
-                        </ul>
+                            </ul>
+                        </div>
                     )}
                 </Col>
             </Row>
