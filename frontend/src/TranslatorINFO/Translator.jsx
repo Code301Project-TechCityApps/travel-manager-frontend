@@ -22,8 +22,6 @@ function Translator() {
         try {
             const response = await axios.post(`${API}/api/translate/translate?text=${text}&toLang=${toLang}`)
             console.log('response.data ', response.data);
-            // const response = await axios.post(`http://localhost:3000/api/translate/translate?text=${text}&toLang=${toLang}`)
-            // console.log('response.data ', response.data);
             setTranslations(response.data);
         } catch (error) {
             console.error('Translation Error:', error);
