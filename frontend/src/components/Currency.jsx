@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
+import CurrencyModal from './CurrencyModal'; // Make sure this path is correct
+import currencies from '../assets/currencies.json'; // Imported currencies data
 
 const API_KEY = import.meta.env.VITE_LOCATION_API_KEY;
 
@@ -10,6 +12,17 @@ function Currency() {
     const [conversionResult, setConversionResult] = useState(null);
     const [latestRates, setLatestRates] = useState({});
     const [error, setError] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [activeField, setActiveField] = useState('from'); // Track which field triggered the modal
+
+    const handleCurrencySelect = (currencyCode) => {
+        if (activeField === 'from') {
+            setFromCurrency(currencyCode);
+        } else {
+            setToCurrency(currencyCode);
+        }
+        setShowModal(false); // Close the modal after selection
+    };
 
     // Function to convert currency
     const handleConvert = async () => {
@@ -17,16 +30,24 @@ function Currency() {
             const url = `https://api.currencybeacon.com/v1/convert?api_key=${API_KEY}&from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
             const response = await fetch(url);
             if (!response.ok) {
-                const errorText = await response.text();  // Attempt to read the response as text
+                const errorText = await response.text();
                 throw new Error('Failed to convert currency: ' + errorText);
             }
             const data = await response.json();
-            setConversionResult(data);  // Update the state with the conversion result
-            console.log({data});  // Log the result to the console for debugging
+            console.log("API data:", data);  // Log the API response data to check the structure
+            if (typeof <data className="value"></data> !== 'number') {
+                console.error('Unexpected result type:', data.value);
+                throw new Error('Conversion result is not a number.');
+            }
+            const formattedResult = Number(data.value).toFixed(2);
+            const currencySymbol = currencies.find(c => c.code === toCurrency)?.symbol || '';
+            setConversionResult({
+                value: formattedResult,
+                symbol: currencySymbol
+            });
         } catch (err) {
             console.error('Error converting currency:', err);
-            setError(err.message);  // Update the state with the error message
-            console.log(err.message);  // Log the error message to the console for debugging
+            setError(err.message);
         }
     };
 
@@ -58,7 +79,13 @@ function Currency() {
                                 From
                             </Form.Label>
                             <Col sm="10">
-                                <Form.Control list="country" as="input" value={fromCurrency} onChange={e => setFromCurrency(e.target.value)} />
+                                <Form.Control 
+                                  as="input" 
+                                  value={fromCurrency}
+                                  readOnly
+                                  onClick={() => { setActiveField('from'); setShowModal(true); }}
+                                />
+                                <Button onClick={() => { setActiveField('from'); setShowModal(true); }}>Select Currency</Button>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
@@ -66,7 +93,13 @@ function Currency() {
                                 To
                             </Form.Label>
                             <Col sm="10">
-                                <Form.Control list="country" as="input" value={toCurrency} onChange={e => setToCurrency(e.target.value)} />
+                                <Form.Control 
+                                  as="input" 
+                                  value={toCurrency} 
+                                  readOnly
+                                  onClick={() => { setActiveField('to'); setShowModal(true); }}
+                                />
+                                <Button onClick={() => { setActiveField('to'); setShowModal(true); }}>Select Currency</Button>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
@@ -77,13 +110,12 @@ function Currency() {
                                 <Form.Control type="number" value={amount} onChange={e => setAmount(e.target.value)} />
                             </Col>
                         </Form.Group>
-                        <datalist id="country">
-                                <option value={"USD"} /> 
-                                <option value={"CAD"} /> 
-                        </datalist>
                         <Button onClick={handleConvert}>Convert</Button>
                     </Form>
-                    {conversionResult && <Alert variant="success">Conversion Result: {conversionResult.value}</Alert>}
+                    {conversionResult && (
+                    <Alert variant="success">
+                        Conversion Result: {conversionResult.symbol}{conversionResult.value}
+                    </Alert>)}
                 </Col>
                 <Col>
                     <h2>Latest Rates</h2>
@@ -98,6 +130,12 @@ function Currency() {
                 </Col>
             </Row>
             {error && <Alert variant="danger">{error}</Alert>}
+            <CurrencyModal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                onSelectCurrency={handleCurrencySelect}
+                currencies={currencies}
+            />
         </Container>
     );
 }
