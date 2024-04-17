@@ -23,7 +23,7 @@ function Currency() {
             setToCurrency(currencyCode);
         }
         setShowModal(false);
-        // help me
+        // help me again
         handleFetchRates();
     };
 
