@@ -2,7 +2,10 @@
 
 Travel Manager Application
 
- [Domain Model](./domain-model.md)
+ [Domain Model](./domain-model.md)  
+   
+  Application Wireframe:   
+ ![Wireframe Image](../travel-manager-frontend/frontend/images/Wireframe.png)
 
 ## Team Agreements
 

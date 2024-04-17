@@ -1,24 +1,28 @@
-import { withAuth0 } from '@auth0/auth0-react';
-import AuthButtons from './Auth/AuthButtons';
-// import Login from './Auth/Login';
-// import Logout from './Auth/Logout';
-
-function App(props) {
-    return(
-      <>
-        <div>
-          Login or Logout with one component <AuthButtons />
-        </div>
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthButtons from './auth/AuthButtons';
+import CurrencyConverter from './components/Currency'; // Ensure the import path is correct
+import Home from './components/Home'; // Ensure the import path is correct
+import OffcanvasNavbar from './components/OffcanvasNavbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Translator from './components/Translator';
 
 
-      
-        {props.auth0.isAuthenticated &&
-          <>
-          <h1>Testing?</h1>
-          </>
-        }
-      </>
-    )
-  }
+function App() {
+    return (
+        <Router>
+            <OffcanvasNavbar />
+            <div>
+                Auth0
+                <AuthButtons />
+            </div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/translator" element={<Translator />} />
+                <Route path="/currency" element={<CurrencyConverter />} />
+            </Routes>
+        </Router>
+    );
+}
 
-export default withAuth0(App);
+export default App;

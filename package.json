@@ -13,10 +13,13 @@
     "@auth0/auth0-react": "^2.2.4",
     "auth0": "^4.3.1",
     "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
+    "e": "^0.2.33",
     "express": "^4.19.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
