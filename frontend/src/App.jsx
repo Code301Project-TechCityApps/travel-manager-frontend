@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AuthButtons from './auth/AuthButtons';
+import AuthButtons from '../src/Auth/AuthButtons';
 import CurrencyConverter from './components/Currency'; // Ensure the import path is correct
 import Home from './components/Home'; // Ensure the import path is correct
 import OffcanvasNavbar from './components/OffcanvasNavbar';
