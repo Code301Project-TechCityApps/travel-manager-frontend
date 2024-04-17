@@ -1,74 +1,3 @@
-// import { useState } from "react";
-
-// function TransportationSearch() {
-//     // const [lat, setLat] = useState('');
-//     // const [lng, setLng] = useState('');
-//     const [name, setName] = useState('');
-//     const [transportationData, setTransportationData] = useState(null);
-//     const [error, setError] = useState(null);
-
-//     const handleSearch = async () => {
-//         try {
-//             const response = await fetch(`http://localhost:3000/api/transportation/traveldata?lat=${lat}&lng=${lng}&name=${name}`);
-//             if (!response.ok) {
-//                 throw new Error('Error fetching transportation data');
-//             }
-//             const data = await response.json();
-//             console.log(data)
-//             setTransportationData(data);
-//         } catch (error) {
-//             console.error(error);
-//             setError('Error fetching transportation data');
-//         }
-//     };
-
-//     return (
-//         <div>
-//           {/* <h2>Transportation Search</h2>
-//           <div>
-//             <label htmlFor="lat">Latitude:</label>
-//             <input
-//               type="text"
-//               id="lat"
-//               value={lat}
-//               onChange={(e) => setLat(e.target.value)}
-//             />
-//           </div>
-//           <div>
-//             <label htmlFor="lng">Longitude:</label>
-//             <input
-//               type="text"
-//               id="lng"
-//               value={lng}
-//               onChange={(e) => setLng(e.target.value)}
-//             />
-//           </div> */}
-//           <div>
-//             <label htmlFor="name">Destination Name:</label>
-//             <input
-//               type="text"
-//               id="name"
-//               value={name}
-//               onChange={(e) => setName(e.target.value)}
-//             />
-//           </div>
-//           <button onClick={handleSearch}>Search</button>
-    
-//           {error && <div>Error: {error}</div>}
-          
-//           {transportationData && (
-//             <div>
-//               <h3>Transportation Data</h3>
-//               <pre>{JSON.stringify(transportationData, null, 2)}</pre>
-//             </div>
-//           )}
-//         </div>
-//       );
-// }
-
-// export default TransportationSearch;
-
-
 import { useState, useEffect } from "react";
 
 const API_KEY = import.meta.env.VITE_LOCATION_IQ_KEY
@@ -111,30 +40,12 @@ function TransportationSearch() {
         }
     }
 
-    // const handleSearch = async () => {
-    //     if (!coordinates) {
-    //         setError('Geolocation coordinates not available.');
-    //         return;
-    //     }
-    //     try {
-    //         const response = await fetch(`http://localhost:3000/api/transportation/traveldata?lat=${coordinates.lat}&lng=${coordinates.lng}&name=${name}`);
-    //         if (!response.ok) {
-    //             throw new Error('Error fetching transportation data');
-    //         }
-    //         const data = await response.json();
-    //         console.log(data)
-    //         setTransportationData(data);
-    //     } catch (error) {
-    //         console.error(error);
-    //         setError('Error fetching transportation data');
-    //     }
-    // };
     function handleSubmit(e) {
         e.preventDefault();
         getLocation();
       }
-      
-    return (
+
+      return (
         <div>
             <form onSubmit = {handleSubmit}>
                 <label htmlFor="name">Destination Name:</label>
@@ -156,7 +67,18 @@ function TransportationSearch() {
               className="card-img-top my-2"
               alt="Location Map" 
             />
-                    <pre>{JSON.stringify(transportationData, null, 2)}</pre>
+                    {transportationData.boards.map(board => (
+                      <div key={board.place.name}>
+                        <h4>{board.place.name}</h4>
+                        <ul>
+                          {board.departures.map(departure => (
+                            <li key={departure.time}>
+                              Time: {departure.time}, Category: {departure.transport.category}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                 </div>
             )}
         </div>
