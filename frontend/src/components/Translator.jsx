@@ -11,6 +11,7 @@ function Translator() {
     const [translations, setTranslations] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [languages, setLanguages] = useState([]);
+    const [languageName, setLanguageName] = useState("");
 
     useEffect(() => {
         setLanguages(languagesData);
@@ -26,6 +27,7 @@ function Translator() {
 
     const handleSelectLanguage = (selectedLanguage) => {
         setToLang([selectedLanguage]);
+       setLanguageName(languages.filter(lang => lang.code === selectedLanguage)[0]?.language);
         handleCloseModal();
     };
 
@@ -49,7 +51,15 @@ function Translator() {
             <form onSubmit={handleSubmit}>
                 <label htmlFor='text'>Text:</label>
                 <input type="text" id="text" value={text} onChange={handleChangeText} />
-                <button type='button' onClick={handleOpenModal}>Select Language</button>
+                <button type='button' onClick={handleOpenModal}>
+                    Choose a language
+                    (
+                        {
+                          languageName
+                        }
+                       
+                        )
+                </button>
                 <button type='submit'>Translate</button>
             </form>
             <TranslationModal
