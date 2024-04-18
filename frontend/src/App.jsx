@@ -1,30 +1,34 @@
+// App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AuthButtons from '../src/Auth/AuthButtons';
-import CurrencyConverter from './components/Currency'; // Ensure the import path is correct
-import Home from './components/Home'; // Ensure the import path is correct
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import OffcanvasNavbar from './components/OffcanvasNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Translator from './components/Translator';
-import Transportation from './components/Transportation';
+import LandingPage from './components/LandingPage';
+import HomePage from './components/Home'; 
 
+// const ConditionalNavbar = () => {
+//   const location = useLocation();
+//   const showNavbar = location.pathname !== "/";
+//   return showNavbar ? <OffcanvasNavbar /> : null;
+// };
 
 function App() {
-    return (
-        <Router>
-            <OffcanvasNavbar />
-            <div>
-                Auth0
-                <AuthButtons />
-            </div>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/translator" element={<Translator />} />
-                <Route path="/currency" element={<CurrencyConverter />} />
-                <Route path="/transportation" element={<Transportation/>}/>
-            </Routes>
-        </Router>
-    );
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <Router>
+        { !isAuthenticated && <OffcanvasNavbar />}
+      <Routes>
+        {/* <Route path="/" element= {<LandingPage />}/> */}
+        <Route path="/" element={!isAuthenticated ? <HomePage /> : <LandingPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
