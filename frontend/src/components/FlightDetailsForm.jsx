@@ -14,7 +14,7 @@ const FlightDetailsForm = () => {
     e.preventDefault();
     try {
       // Send flight details to backend
-      await axios.post('/api/submit-flight-details', {
+      await axios.post(`${import.meta.VITE_SERVER_URL}/api/submit-flight-details`, {
         airline,
         flightNumber,
         departureAirport,

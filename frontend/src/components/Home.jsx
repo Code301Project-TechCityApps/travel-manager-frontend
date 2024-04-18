@@ -1,4 +1,5 @@
 import React from 'react';
+import FlightDetailsForm from './FlightDetailsForm';
 
 function Home() {
     return (
@@ -6,6 +7,7 @@ function Home() {
         <h1>This is Home Page</h1>
         <p>This section should house the imported travel itinerary</p>
         <p>This section should house the transportation API</p>
+        <FlightDetailsForm/>
         </>
 )}
 
