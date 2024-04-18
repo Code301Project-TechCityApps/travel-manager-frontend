@@ -30,7 +30,7 @@ const FlightDetailsForm = () => {
   };
 
   const handleEdit = () => {
-    // Set submitted to false to switch back to edit mode
+    // Set submitted to false to switch back to edit mode.
     setSubmitted(false);
   };
 
