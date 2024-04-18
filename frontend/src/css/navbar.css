@@ -1,0 +1,53 @@
+/* General navbar styles */
+.navbar {
+    background-color: var(--bs-body-tertiary); /* Utilize CSS variables for themes */
+    margin-bottom: 20px; /* Space below the navbar */
+}
+
+.navbar-brand {
+    color: #141414; /* Light color for contrast */
+    font-weight: bold; /* Makes the brand more prominent */
+    text-decoration: none; /* Removes underline */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.navbar-brand:hover {
+    color: #ccc; /* Color change on hover */
+}
+
+/* Styles for the offcanvas toggle button */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1); /* Light border for the toggle button */
+}
+
+/* Specific styling for the navigation links */
+.nav-link {
+    align-content: center;
+    color: #1e1e1e; /* Bootstrap default light */
+    transition: color 0.2s; /* Smooth color transition on hover */
+}
+
+.nav-link:hover {
+    color: #cbd3da; /* Light gray for hover state */
+}
+
+/* AuthButtons specific styling */
+.auth-buttons {
+    display: flex;
+    justify-content: center; /* Centers the authentication buttons */
+}
+
+/* Adjustments for the offcanvas component */
+.offcanvas-header {
+    border-bottom: 1px solid #dee2e6; /* Adds a subtle border to the header */
+}
+
+.offcanvas-title {
+    color: #004085; /* Dark blue for visibility and consistency */
+    font-size: 1.25rem; /* Slightly larger size for the title */
+}
+
+
+.offcanvas-body .nav-link {
+    padding-bottom: 10px; /* Space below each link */
+}

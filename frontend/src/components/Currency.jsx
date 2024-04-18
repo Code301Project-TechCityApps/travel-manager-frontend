@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
 import CurrencyModal from './CurrencyModal';
 import currencies from '../assets/currencies.json';
+import '../css/currency.css'
 
 const API_KEY = import.meta.env.VITE_CURRENCY_API_KEY;
 

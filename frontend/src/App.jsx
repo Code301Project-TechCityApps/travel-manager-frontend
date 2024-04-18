@@ -10,12 +10,6 @@ import Currency from './components/Currency';
 import Translator from './components/Translator';
 
 
-// const ConditionalNavbar = () => {
-//   const location = useLocation();
-//   const showNavbar = location.pathname !== "/";
-//   return showNavbar ? <OffcanvasNavbar /> : null;
-// };
-
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
 
@@ -30,12 +24,11 @@ function App() {
         <Route path="/" element={isAuthenticated ? <HomePage /> : <LandingPage />} />
         <Route path="/currency" element={isAuthenticated && <Currency />} />
         <Route path="/translator" element={isAuthenticated && <Translator />} />
+        <Route path="/home" element={isAuthenticated && <HomePage />} />
+
       </Routes>
     </Router>
   );
 }
-
-
-//fixed branch 
 
 export default App;
