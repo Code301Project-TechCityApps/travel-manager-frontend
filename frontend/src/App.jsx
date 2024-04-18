@@ -1,4 +1,3 @@
-// App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -8,6 +7,7 @@ import LandingPage from './components/LandingPage';
 import HomePage from './components/Home'; 
 import Currency from './components/Currency';
 import Translator from './components/Translator';
+import FlightDetailsForm from './components/FlightDetailsForm';
 
 
 // const ConditionalNavbar = () => {
