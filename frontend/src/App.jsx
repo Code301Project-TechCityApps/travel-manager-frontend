@@ -24,6 +24,8 @@ function App() {
         <Route path="/" element={isAuthenticated ? <HomePage /> : <LandingPage />} />
         <Route path="/currency" element={isAuthenticated && <Currency />} />
         <Route path="/translator" element={isAuthenticated && <Translator />} />
+        <Route path="/home" element={isAuthenticated && <HomePage />} />
+
       </Routes>
     </Router>
   );
