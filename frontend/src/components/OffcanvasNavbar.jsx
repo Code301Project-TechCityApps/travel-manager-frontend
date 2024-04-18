@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, Navbar, Nav, Offcanvas } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Navbar, Nav, Offcanvas, Form, Button } from 'react-bootstrap';
 import AuthButtons from '../Auth/AuthButtons'; // Import AuthButtons component
+import { Link } from 'react-router-dom';
+import '../css/navbar.css';
 
 function OffcanvasNavbar() {
     return (
@@ -19,12 +20,11 @@ function OffcanvasNavbar() {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
-                            <Nav.Link as={Link} to="/home">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/">Home</Nav.Link>
                             <Nav.Link as={Link} to="/currency">Currency Converter</Nav.Link>
                             <Nav.Link as={Link} to="/translator">Translator Tool</Nav.Link>
+                            <AuthButtons />
                         </Nav>
-                        {/* AuthButtons added to the navbar for user authentication */}
-                        <AuthButtons />
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>
             </Container>
