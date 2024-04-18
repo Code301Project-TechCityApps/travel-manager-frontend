@@ -1,0 +1,30 @@
+.title-row h2,
+.rates-row h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+}
+
+.button-group Button {
+    width: 50%;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.Form-Group Col {
+    display: flex;
+    justify-content: center;
+}
+
+.Form-Group Col Form.Control {
+    width: 75%;
+}
+
+.rates-list {
+    max-height: 300px;
+    overflow-y: auto;
+}

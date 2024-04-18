@@ -23,7 +23,6 @@ function Currency() {
             setToCurrency(currencyCode);
         }
         setShowModal(false);
-        // help me again
         handleFetchRates();
     };
 
@@ -32,7 +31,6 @@ function Currency() {
             setError('Please ensure all fields are correctly filled and the amount is greater than zero.');
             return;
         }
-    
         try {
             const url = `https://api.currencybeacon.com/v1/convert?api_key=${API_KEY}&from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
             const response = await fetch(url);
@@ -57,7 +55,6 @@ function Currency() {
     const handleFetchRates = async (showAll = false) => {
         const symbols = showAll ? '' : 'USD,EUR,JPY,GBP,CAD';
         const url = `https://api.currencybeacon.com/v1/latest?api_key=${API_KEY}&base=${fromCurrency}&symbols=${symbols}`;
-
         try {
             const response = await fetch(url);
             if (!response.ok) {
@@ -68,7 +65,6 @@ function Currency() {
                 acc[key] = Number(value).toFixed(2);
                 return acc;
             }, {});
-
             setLatestRates(formattedRates);
         } catch (err) {
             console.error('Error fetching rates:', err);
@@ -76,71 +72,54 @@ function Currency() {
         }
     };
 
+    const openModal = (field) => {
+        setActiveField(field);
+        setShowModal(true);
+    };
+
     return (
-        <Container fluid="sm" className="p-3">
-            <Row className="mb-4">
+        <Container>
+            <Row className="title-row">
                 <Col>
-                    <h2 className="text-center">Currency Converter</h2>
+                    <h2>Currency Converter</h2>
                     <Form>
-                        <Form.Group as={Row} className="mb-3" controlId="fromCurrency">
+                        <Form.Group as={Row} controlId="fromCurrency">
                             <Form.Label column sm={3}>From</Form.Label>
-                            <Col sm={9} className="d-flex justify-content-center">
-                                <Form.Control
-                                    as="input"
-                                    value={fromCurrency}
-                                    readOnly
-                                    onClick={() => setActiveField('from')}
-                                    aria-label="From currency"
-                                    className="w-75"
-                                />
-                                <Button variant="outline-primary" className="mt-2 ms-2" onClick={() => setShowModal(true)}>Select</Button>
+                            <Col sm={9}>
+                                <Form.Control as="input" value={fromCurrency} readOnly onClick={() => openModal('from')} aria-label="From currency"/>
+                                <Button variant="outline-primary" onClick={() => openModal('from')}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="toCurrency">
+                        <Form.Group as={Row} controlId="toCurrency">
                             <Form.Label column sm={3}>To</Form.Label>
-                            <Col sm={9} className="d-flex justify-content-center">
-                                <Form.Control
-                                    as="input"
-                                    value={toCurrency}
-                                    readOnly
-                                    onClick={() => setActiveField('to')}
-                                    aria-label="To currency"
-                                    className="w-75"
-                                />
-                                <Button variant="outline-primary" className="mt-2 ms-2" onClick={() => setShowModal(true)}>Select</Button>
+                            <Col sm={9}>
+                                <Form.Control as="input" value={toCurrency} readOnly onClick={() => openModal('to')} aria-label="To currency"/>
+                                <Button variant="outline-primary" onClick={() => openModal('to')}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="amount">
+                        <Form.Group as={Row} controlId="amount">
                             <Form.Label column sm={3}>Amount</Form.Label>
-                            <Col sm={9} className="d-flex justify-content-center">
-                                <Form.Control
-                                    type="number"
-                                    value={amount}
-                                    onChange={e => setAmount(e.target.value)}
-                                    aria-label="Amount to convert"
-                                    className="w-75"
-                                />
+                            <Col sm={9}>
+                                <Form.Control type="number" value={amount} onChange={e => setAmount(e.target.value)} aria-label="Amount to convert"/>
                             </Col>
                         </Form.Group>
-                        <div className="d-flex justify-content-center">
-                            <Button variant="success" className="w-50" onClick={handleConvert}>Convert</Button>
+                        <div className="button-group">
+                            <Button variant="success" onClick={handleConvert}>Convert</Button>
                         </div>
                     </Form>
                     {conversionResult && (
-                        <Alert variant="success" className="mt-3">
+                        <Alert variant="success">
                             Conversion Result: {conversionResult.symbol}{conversionResult.value}
                         </Alert>
                     )}
                 </Col>
             </Row>
-            <Row>
+            <Row className="rates-row">
                 <Col>
-                    <h2 className="text-center mb-3">Latest Rates</h2>
-                    <div className="d-flex justify-content-center mb-2">
-                        <Button variant="primary" className="w-50" onClick={() => handleFetchRates(false)}>Fetch Top 5 Rates</Button>
-                    </div>
-                    <div className="d-flex justify-content-center mb-2">
-                        <Button variant="secondary" className="w-50" onClick={() => {
+                    <h2>Latest Rates</h2>
+                    <div className="button-group">
+                        <Button variant="primary" onClick={() => handleFetchRates(false)}>Fetch Top 5 Rates</Button>
+                        <Button variant="secondary" onClick={() => {
                             setShowAllRates(!showAllRates);
                             handleFetchRates(!showAllRates);
                         }}>
@@ -148,8 +127,8 @@ function Currency() {
                         </Button>
                     </div>
                     {Object.keys(latestRates).length > 0 && (
-                        <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                            <ul className="list-unstyled">
+                        <div className="rates-list">
+                            <ul>
                                 {Object.entries(latestRates).map(([key, value]) => (
                                     <li key={key}>{key}: {value}</li>
                                 ))}
@@ -168,5 +147,6 @@ function Currency() {
         </Container>
     );
 }
+
 
 export default Currency;
