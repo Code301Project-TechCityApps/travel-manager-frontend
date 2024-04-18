@@ -29,10 +29,6 @@ function TranslationModal({ show, onHide, onSelectLanguage, languages }) {
                 <Modal.Title>Select Language</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* <Form.Group controlId="languageSearch">
-                    <Form.Label>Search Language:</Form.Label>
-                    <Form.Control type="text" placeholder="Search language or code" value={searchQuery} onChange={handleSearchChange} />
-                </Form.Group> */}
                 <Form.Group controlId="languageSelect">
                     <Form.Label>Select Language:</Form.Label>
                     <Form.Control as="select" value={selectedLanguage} onChange={handleChangeLanguage}>

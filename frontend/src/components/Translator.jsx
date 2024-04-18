@@ -51,20 +51,24 @@ function Translator() {
                <Form onSubmit={handleSubmit}>
                    <Form.Group controlId="text">
                          <Form.Control type="text" className="translated-box" value={text} onChange={handleChangeText} as="textarea" placeholder="Enter your text here..." />
-                         <Button variant="primary" onClick={handleOpenModal}
+                     </Form.Group>
+                     <Button variant="primary" onClick={handleOpenModal}
                           style={{
-                            marginLeft: '30%'
+                            marginLeft: '32%',
+                            marginTop: '20px'
                         }}
                          >Choose Language
                      </Button>
-                     </Form.Group>
-                    
+                    <div  style={{  
+                            padding: '10px',
+                        }}>
+                        
+                    </div>
                      <Button variant="success" type="submit" 
                           style={{
-                            marginLeft: '37%'
+                            marginLeft: '40%',
                         }}
                        >
-
                          Translate
                      </Button>
                  </Form>
@@ -75,14 +79,16 @@ function Translator() {
                     languages={languages} // Pass your language data here
                 />
            
-            <Card.Title className="translation-title">Translation:</Card.Title>
+            <Card.Title className="translation-title"
+             style={{
+                paddingTop:'20px'
+            }}
+            >Translation:</Card.Title>
             <Form.Label>Selected Language: {languageName}</Form.Label>
                 <Card.Text className="translated-box" >
                 {translations.translatedText ? (
                     <strong>{translations.translatedText}</strong>
-                ) : (
-                    <em>Your translated text will appear here...</em>
-                )}
+                ) : (<em>Your translated text will appear here...</em>)}
                 </Card.Text>
              </Card.Body>
          </Card>
