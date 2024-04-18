@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
-import CurrencyModal from './CurrencyModal'; // Make sure this path is correct
-import currencies from '../assets/currencies.json'; // Imported currencies data
+import CurrencyModal from './CurrencyModal';
+import currencies from '../assets/currencies.json';
 
-const API_KEY = import.meta.env.VITE_LOCATION_API_KEY;
+const API_KEY = import.meta.env.VITE_CURRENCY_API_KEY;
 
 function Currency() {
     const [fromCurrency, setFromCurrency] = useState('');
@@ -13,7 +13,8 @@ function Currency() {
     const [latestRates, setLatestRates] = useState({});
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [activeField, setActiveField] = useState('from'); // Track which field triggered the modal
+    const [showAllRates, setShowAllRates] = useState(false);
+    const [activeField, setActiveField] = useState('from');
 
     const handleCurrencySelect = (currencyCode) => {
         if (activeField === 'from') {
@@ -21,11 +22,15 @@ function Currency() {
         } else {
             setToCurrency(currencyCode);
         }
-        setShowModal(false); // Close the modal after selection
+        setShowModal(false);
+        handleFetchRates();
     };
 
-    // Function to convert currency
     const handleConvert = async () => {
+        if (!fromCurrency || !toCurrency || isNaN(amount) || amount <= 0) {
+            setError('Please ensure all fields are correctly filled and the amount is greater than zero.');
+            return;
+        }
         try {
             const url = `https://api.currencybeacon.com/v1/convert?api_key=${API_KEY}&from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
             const response = await fetch(url);
@@ -34,12 +39,8 @@ function Currency() {
                 throw new Error('Failed to convert currency: ' + errorText);
             }
             const data = await response.json();
-            console.log("API data:", data);  // Log the API response data to check the structure
-            if (typeof <data className="value"></data> !== 'number') {
-                console.error('Unexpected result type:', data.value);
-                throw new Error('Conversion result is not a number.');
-            }
-            const formattedResult = Number(data.value).toFixed(2);
+            const conversionValue = data.response.value;
+            const formattedResult = Number(conversionValue).toFixed(2);
             const currencySymbol = currencies.find(c => c.code === toCurrency)?.symbol || '';
             setConversionResult({
                 value: formattedResult,
@@ -51,81 +52,88 @@ function Currency() {
         }
     };
 
-    // Function to get the latest rates
-    const handleFetchRates = async (base = '', symbols = '') => {
+    const handleFetchRates = async (showAll = false) => {
+        const symbols = showAll ? '' : 'USD,EUR,JPY,GBP,CAD';
+        const url = `https://api.currencybeacon.com/v1/latest?api_key=${API_KEY}&base=${fromCurrency}&symbols=${symbols}`;
         try {
-            const response = await fetch(`https://api.currencybeacon.com/v1/latest?api_key=${API_KEY}&base=${base}&symbols=${symbols}`);
+            const response = await fetch(url);
             if (!response.ok) {
-                const errorText = await response.text(); // Getting the error message from the response body
-                throw new Error('Failed to fetch rates: ' + errorText);
+                throw new Error('Failed to fetch rates: ' + await response.text());
             }
             const data = await response.json();
-            setLatestRates(data.rates);
+            const formattedRates = Object.entries(data.rates).reduce((acc, [key, value]) => {
+                acc[key] = Number(value).toFixed(2);
+                return acc;
+            }, {});
+            setLatestRates(formattedRates);
         } catch (err) {
             console.error('Error fetching rates:', err);
             setError(err.message);
         }
     };
-    console.log({latestRates});
+
+    const openModal = (field) => {
+        setActiveField(field);
+        setShowModal(true);
+    };
 
     return (
         <Container>
-            <Row>
+            <Row className="title-row">
                 <Col>
                     <h2>Currency Converter</h2>
                     <Form>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="2">
-                                From
-                            </Form.Label>
-                            <Col sm="10">
-                                <Form.Control 
-                                  as="input" 
-                                  value={fromCurrency}
-                                  readOnly
-                                  onClick={() => { setActiveField('from'); setShowModal(true); }}
-                                />
-                                <Button onClick={() => { setActiveField('from'); setShowModal(true); }}>Select Currency</Button>
+                        <Form.Group as={Row} controlId="fromCurrency">
+                            <Form.Label column sm={3}>From</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control as="input" value={fromCurrency} readOnly onClick={() => openModal('from')} aria-label="From currency"/>
+                                <Button variant="outline-primary" onClick={() => openModal('from')}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="2">
-                                To
-                            </Form.Label>
-                            <Col sm="10">
-                                <Form.Control 
-                                  as="input" 
-                                  value={toCurrency} 
-                                  readOnly
-                                  onClick={() => { setActiveField('to'); setShowModal(true); }}
-                                />
-                                <Button onClick={() => { setActiveField('to'); setShowModal(true); }}>Select Currency</Button>
+                        <Form.Group as={Row} controlId="toCurrency">
+                            <Form.Label column sm={3}>To</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control as="input" value={toCurrency} readOnly onClick={() => openModal('to')} aria-label="To currency"/>
+                                <Button variant="outline-primary" onClick={() => openModal('to')}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm="2">
-                                Amount
-                            </Form.Label>
-                            <Col sm="10">
-                                <Form.Control type="number" value={amount} onChange={e => setAmount(e.target.value)} />
+                        <Form.Group as={Row} controlId="amount">
+                            <Form.Label column sm={3}>Amount</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="number" value={amount} onChange={e => setAmount(e.target.value)} aria-label="Amount to convert"/>
                             </Col>
                         </Form.Group>
-                        <Button onClick={handleConvert}>Convert</Button>
+                        <div className="button-group">
+                            <Button variant="success" onClick={handleConvert}>Convert</Button>
+                        </div>
                     </Form>
                     {conversionResult && (
-                    <Alert variant="success">
-                        Conversion Result: {conversionResult.symbol}{conversionResult.value}
-                    </Alert>)}
+                        <Alert variant="success">
+                            Conversion Result: {conversionResult.symbol}{conversionResult.value}
+                        </Alert>
+                    )}
                 </Col>
+            </Row>
+            <Row className="rates-row">
                 <Col>
                     <h2>Latest Rates</h2>
-                    <Button onClick={() => handleFetchRates(fromCurrency, toCurrency)}>Fetch Rates</Button>
+                    <div className="button-group">
+                        <Button variant="primary" onClick={() => handleFetchRates(false)}>Fetch Top 5 Rates</Button>
+                        <Button variant="secondary" onClick={() => {
+                            setShowAllRates(!showAllRates);
+                            handleFetchRates(!showAllRates);
+                        }}>
+                            {showAllRates ? 'Show Less' : 'Show All'}
+                        </Button>
+                    </div>
                     {Object.keys(latestRates).length > 0 && (
-                        <ul>
-                            {Object.entries(latestRates).map(([key, value]) => (
-                                <li key={key}>{key}: {value}</li>
-                            ))}
-                        </ul>
+                        <div className="rates-list">
+                            <ul>
+                                {Object.entries(latestRates).map(([key, value]) => (
+                                    <li key={key}>{key}: {value}</li>
+                                ))}
+                            </ul>
+                        </div>
                     )}
                 </Col>
             </Row>
@@ -139,5 +147,6 @@ function Currency() {
         </Container>
     );
 }
+
 
 export default Currency;
