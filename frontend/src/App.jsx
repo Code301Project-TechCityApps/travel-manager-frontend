@@ -6,6 +6,9 @@ import OffcanvasNavbar from './components/OffcanvasNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LandingPage from './components/LandingPage';
 import HomePage from './components/Home'; 
+import Currency from './components/Currency';
+import Translator from './components/Translator';
+
 
 // const ConditionalNavbar = () => {
 //   const location = useLocation();
@@ -22,10 +25,11 @@ function App() {
 
   return (
     <Router>
-        { !isAuthenticated && <OffcanvasNavbar />}
+        { isAuthenticated && <OffcanvasNavbar />}
       <Routes>
-        {/* <Route path="/" element= {<LandingPage />}/> */}
-        <Route path="/" element={!isAuthenticated ? <HomePage /> : <LandingPage />} />
+        <Route path="/" element={isAuthenticated ? <HomePage /> : <LandingPage />} />
+        <Route path="/currency" element={isAuthenticated && <Currency />} />
+        <Route path="/translator" element={isAuthenticated && <Translator />} />
       </Routes>
     </Router>
   );
