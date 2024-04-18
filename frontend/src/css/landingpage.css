@@ -1,24 +1,50 @@
-/* Adding a vertical gradient background for the landing page */
+html, body {
+  height: 100%; /* Full height of the viewport */
+  width: 100%; /* Full width of the viewport */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 .landing-page {
-  background-image: linear-gradient(to bottom, #cae0e8, #a3bac3);
-  min-height: 100vh;  /* Full viewport height ensures gradient covers entire page area */
+  background-image: linear-gradient(to bottom, #e6f8ff, #9eceff, #49a6ca);
+  min-height: 100vh; /* Minimum height to cover the viewport */
+  width: 100%; /* Full width */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.landing-page .text-center {
-  text-align: center;
+.container {
+  margin-bottom: 200px;
+  padding: 24px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2); /* Drop shadow */
+  width: auto;
 }
 
-p {
+.landing-page .text-center, p {
   text-align: center;
-  margin-top: 10px; /* Corrected syntax error from ';;' to ';' */
+  color: rgb(54, 54, 54);
+}
+
+h1 {
+  font-size: 50px;
+  letter-spacing: -4px;
+}
+p {
+  margin-top: 10px;
+  font-size: 12px;
 }
 
 img {
-  width: 100%;
-  max-width: 150px; /* Limits logo size, ensuring it doesn't become too large */
-  height: auto; /* Maintains the aspect ratio */
+  width: 100%; 
+  max-width: 150px; /* Maximum width limit */
+  height: auto; /* Maintain aspect ratio */
+}
+
+button {
+  margin: 24px;
 }
