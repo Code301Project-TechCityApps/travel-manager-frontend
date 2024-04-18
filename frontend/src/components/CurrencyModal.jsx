@@ -15,7 +15,7 @@ function CurrencyModal({ show, onHide, onSelectCurrency, currencies }) {
     return (
         <Modal show={show} onHide={onHide} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Select a Currency</Modal.Title>
+                <Modal.Title>Select Currency</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Control
