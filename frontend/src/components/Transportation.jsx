@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { TileLayer, Marker, Popup } from 'react-leaflet';
+import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 
 const API_KEY = import.meta.env.VITE_LOCATION_IQ_KEY;
 
@@ -18,6 +20,7 @@ function TransportationSearch() {
 
         const fromJsonData = await fromResponse.json();
         const toJsonData = await toResponse.json();
+        console.log(fromJsonData)
 
         if (fromJsonData.error || toJsonData.error) {
             setError("Check the spelling!");
@@ -26,7 +29,8 @@ function TransportationSearch() {
 
         const fromCoords = {
             lat: fromJsonData[0].lat,
-            lon: fromJsonData[0].lon
+            lon: fromJsonData[0].lon,
+            name: fromJsonData[0].display_name
         };
 
         setLocation(fromCoords);
@@ -48,7 +52,8 @@ function TransportationSearch() {
         e.preventDefault();
         getLocation();
     }
-
+console.log(transportationData);
+console.log(location);
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -74,14 +79,20 @@ function TransportationSearch() {
             {transportationData && (
                 <div>
                     <h3>Transportation Data</h3>
-                    <img
-                        src={`https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&size=700x640&zoom=12`}
-                        className="card-img-top my-2"
-                        alt="Location Map"
-                    />
+                  
+                    <MDBRow className='w-100'>
+      <MDBCol lg='6' className='my-4'>
+        <iframe
+           src={`https://maps.google.com/maps?q=${location.name}&output=embed`}
+          className='w-100'
+          height='400'
+          loading='lazy'
+        ></iframe>
+      </MDBCol>
+      </MDBRow>
 
-                    {transportationData.boards.map(board => (
-                        <div key={board.place.name}>
+                    {transportationData.boards.map((board, idx) => (
+                        <div key={idx}>
                             <h4>{board.place.name}</h4>
                             <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: "20px" }}>
                                 <thead>
@@ -91,8 +102,8 @@ function TransportationSearch() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {board.departures.map(departure => (
-                                        <tr key={departure.time} style={{ borderBottom: "1px solid #ddd" }}>
+                                    {board.departures.map((departure, idx) => (
+                                        <tr key={idx} style={{ borderBottom: "1px solid #ddd" }}>
                                             <td style={{ padding: "8px", textAlign: "left" }}>{departure.time}</td>
                                             <td style={{ padding: "8px", textAlign: "left" }}>{departure.transport.category}</td>
                                         </tr>
@@ -108,3 +119,4 @@ function TransportationSearch() {
 }
 
 export default TransportationSearch;
+
