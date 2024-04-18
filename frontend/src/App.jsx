@@ -10,12 +10,6 @@ import Currency from './components/Currency';
 import Translator from './components/Translator';
 
 
-// const ConditionalNavbar = () => {
-//   const location = useLocation();
-//   const showNavbar = location.pathname !== "/";
-//   return showNavbar ? <OffcanvasNavbar /> : null;
-// };
-
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
 
@@ -34,8 +28,5 @@ function App() {
     </Router>
   );
 }
-
-
-//fixed branch 
 
 export default App;
