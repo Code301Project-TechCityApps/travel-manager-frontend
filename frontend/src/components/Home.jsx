@@ -5,8 +5,7 @@ import { Button, Container, Row, Col, Image } from 'react-bootstrap';
 function Home() {
     return (
         <>
-        <h1>Home</h1>
-        <p>Transportation Schedule</p>
+        <h1>Transportation</h1>
         <Transportation/>
         </>
 )}

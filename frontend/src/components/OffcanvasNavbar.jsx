@@ -23,6 +23,7 @@ function OffcanvasNavbar() {
                             <Nav.Link as={Link} to="/">Home</Nav.Link>
                             <Nav.Link as={Link} to="/currency">Currency Converter</Nav.Link>
                             <Nav.Link as={Link} to="/translator">Translator Tool</Nav.Link>
+                            <Nav.Link as={Link} to="/flight-itinerary">Flight Itinerary</Nav.Link>
                             <AuthButtons />
                         </Nav>
                     </Offcanvas.Body>

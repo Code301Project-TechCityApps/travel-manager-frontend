@@ -1,53 +1,68 @@
-/* General navbar styles */
 .navbar {
-    background-color: var(--bs-body-tertiary); /* Utilize CSS variables for themes */
-    margin-bottom: 20px; /* Space below the navbar */
+    background-color: var(--bs-body-tertiary);
+    margin-bottom: 1.25rem; 
 }
 
-.navbar-brand {
-    color: #141414; /* Light color for contrast */
-    font-weight: bold; /* Makes the brand more prominent */
-    text-decoration: none; /* Removes underline */
-    transition: color 0.3s; /* Smooth transition for hover effect */
+.navbar {
+    color: #141414;
+    font-size: 2em; /* Updated to a more reasonable size */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
 }
 
-.navbar-brand:hover {
-    color: #ccc; /* Color change on hover */
+.navbar:hover {
+    color: #c1b5b5;
 }
 
-/* Styles for the offcanvas toggle button */
 .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.1); /* Light border for the toggle button */
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Specific styling for the navigation links */
 .nav-link {
     align-content: center;
-    color: #1e1e1e; /* Bootstrap default light */
-    transition: color 0.2s; /* Smooth color transition on hover */
+    color: #1e1e1e;
+    transition: color 0.2s;
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
+    font-size: 1rem; /* Standard size for better readability */
 }
 
 .nav-link:hover {
-    color: #cbd3da; /* Light gray for hover state */
+    color: #d40000;
 }
 
-/* AuthButtons specific styling */
 .auth-buttons {
     display: flex;
-    justify-content: center; /* Centers the authentication buttons */
+    justify-content: center;
 }
 
-/* Adjustments for the offcanvas component */
 .offcanvas-header {
-    border-bottom: 1px solid #dee2e6; /* Adds a subtle border to the header */
+    border-bottom: 0.0625rem solid #dee2e6; 
 }
 
 .offcanvas-title {
-    color: #004085; /* Dark blue for visibility and consistency */
-    font-size: 1.25rem; /* Slightly larger size for the title */
+    color: #004085;
+    font-size: 1.5rem; /* Enhanced size for header titles */
 }
 
-
 .offcanvas-body .nav-link {
-    padding-bottom: 10px; /* Space below each link */
+    padding-bottom: 0.625rem; 
+    font-size: 1.2rem; /* Slightly larger for better readability in offcanvas menu */
+}
+
+.logout-button {
+    background-color: #d9534f;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.5rem 0.75rem; 
+    border-radius: 0.3125rem; 
+    transition: background-color 0.3s;
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
+    font-size: 1.2rem; /* Larger size for better visibility and accessibility */
+}
+
+.logout-button:hover {
+    background-color: #c12e2a;
 }

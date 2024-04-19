@@ -8,6 +8,7 @@ import LandingPage from './components/LandingPage';
 import HomePage from './components/Home'; 
 import Currency from './components/Currency';
 import Translator from './components/Translator';
+import Flights from './components/Flights';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={isAuthenticated ? <HomePage /> : <LandingPage />} />
         <Route path="/currency" element={isAuthenticated && <Currency />} />
         <Route path="/translator" element={isAuthenticated && <Translator />} />
+        <Route path="/flight-itinerary" element={isAuthenticated && <Flights />} />
         <Route path="/home" element={isAuthenticated && <HomePage />} />
 
       </Routes>

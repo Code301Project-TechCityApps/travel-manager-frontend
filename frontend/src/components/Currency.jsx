@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
 import CurrencyModal from './CurrencyModal';
 import currencies from '../assets/currencies.json';
-import '../css/currency.css'
+import '../css/currency.css'; // Assuming this imports the normalized CSS
 
 const API_KEY = import.meta.env.VITE_CURRENCY_API_KEY;
 
@@ -84,23 +84,23 @@ function Currency() {
                 <Col>
                     <h2>Currency Converter</h2>
                     <Form>
-                        <Form.Group as={Row} controlId="fromCurrency">
+                        <Form.Group as={Row} className="form-group" controlId="fromCurrency">
                             <Form.Label column sm={3}>From</Form.Label>
-                            <Col sm={9}>
+                            <Col sm={9} className="form-col">
                                 <Form.Control as="input" value={fromCurrency} readOnly onClick={() => openModal('from')} aria-label="From currency"/>
                                 <Button variant="outline-primary" onClick={() => openModal('from')}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} controlId="toCurrency">
+                        <Form.Group as={Row} className="form-group" controlId="toCurrency">
                             <Form.Label column sm={3}>To</Form.Label>
-                            <Col sm={9}>
+                            <Col sm={9} className="form-col">
                                 <Form.Control as="input" value={toCurrency} readOnly onClick={() => openModal('to')} aria-label="To currency"/>
                                 <Button variant="outline-primary" onClick={() => openModal('to')}>Select</Button>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} controlId="amount">
+                        <Form.Group as={Row} className="form-group" controlId="amount">
                             <Form.Label column sm={3}>Amount</Form.Label>
-                            <Col sm={9}>
+                            <Col sm={9} className="form-col">
                                 <Form.Control type="number" value={amount} onChange={e => setAmount(e.target.value)} aria-label="Amount to convert"/>
                             </Col>
                         </Form.Group>
@@ -148,6 +148,5 @@ function Currency() {
         </Container>
     );
 }
-
 
 export default Currency;

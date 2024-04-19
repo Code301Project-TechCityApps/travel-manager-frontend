@@ -1,7 +1,7 @@
 .title-row h2,
 .rates-row h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .button-group {
@@ -9,10 +9,8 @@
     justify-content: center;
 }
 
-.button-group Button {
-    width: 50%;
-    margin-top: 10px;
-    margin-left: 5px;
+.button-group button {
+    width: 50%; 
 }
 
 .Form-Group Col {
@@ -20,13 +18,24 @@
     justify-content: center;
 }
 
-.Form-Group Col Form.Control {
-    width: 75%;
+.Form-Group Col .form-control {
+    width: 75%; 
 }
 
 .rates-list {
-    max-height: 300px;
+    max-height: 18.75rem; 
     overflow-y: auto;
 }
 
+ul {
+    padding-left: 1rem; 
+}
+
+li {
+    margin-bottom: 0.5rem; 
+}
+
+h2 { 
+    font-size: 1rem;
+}
 
