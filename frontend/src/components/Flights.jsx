@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Table } from 'react-bootstrap';
+
 import FlightForm from './FlightForm';
 
 // Set the API URL to your server endpoint where flight details are submitted
@@ -46,11 +48,30 @@ function Flights() {
             <h1>Flight Itinerary</h1>
             <FlightForm onSubmit={submitFlightDetails} initialFlightDetails={lastSubmitted} />
             <h2>Saved Flights</h2>
-            {flights.map((flight) => (
-                <div key={flight._id}> {/* Use _id which is more unique */}
-                    Airline: {flight.airline}, Flight Number: {flight.flightNumber}, Departure: {flight.departureAirport}, Arrival: {flight.arrivalAirport}, Departure Date: {flight.departureDate}, Return Date: {flight.returnDate}
-                </div>
-            ))}
+            <Table striped bordered hover> {/* Use react-bootstrap Table component */}
+                <thead>
+                    <tr>
+                        <th>Airline</th>
+                        <th>Flight Number</th>
+                        <th>Departure Airport</th>
+                        <th>Arrival Airport</th>
+                        <th>Departure Date</th>
+                        <th>Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {flights.map((flight) => (
+                        <tr key={flight._id}> {/* Use _id which is more unique */}
+                            <td>{flight.airline}</td>
+                            <td>{flight.flightNumber}</td>
+                            <td>{flight.departureAirport}</td>
+                            <td>{flight.arrivalAirport}</td>
+                            <td>{flight.departureDate}</td>
+                            <td>{flight.returnDate}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
         </div>
     );
 }

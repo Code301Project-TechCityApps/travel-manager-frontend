@@ -119,4 +119,3 @@ console.log(location);
 }
 
 export default TransportationSearch;
-
