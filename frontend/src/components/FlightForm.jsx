@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Alert } from 'react-bootstrap';
 
-function FlightForm({ onSubmit }) {
-  const [flightDetails, setFlightDetails] = useState({
+function FlightForm({ onSubmit, initialFlightDetails }) {
+  // Initialize the form with initialFlightDetails or default values
+  const [flightDetails, setFlightDetails] = useState(initialFlightDetails || {
     airline: '',
     flightNumber: '',
     departureAirport: '',
@@ -14,25 +15,17 @@ function FlightForm({ onSubmit }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFlightDetails({
-      ...flightDetails,
+    setFlightDetails(prev => ({
+      ...prev,
       [name]: value
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await onSubmit(flightDetails);
+      await onSubmit(flightDetails);
       setMessage({ type: 'success', text: 'Flight details saved successfully!' });
-      setFlightDetails({
-        airline: '',
-        flightNumber: '',
-        departureAirport: '',
-        arrivalAirport: '',
-        departureDate: '',
-        returnDate: ''
-      }); // Optionally reset form on success
     } catch (error) {
       setMessage({ type: 'danger', text: 'Error saving flight details. Please try again.' });
     }
