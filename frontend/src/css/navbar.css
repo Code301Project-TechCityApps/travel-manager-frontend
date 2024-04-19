@@ -3,15 +3,17 @@
     margin-bottom: 1.25rem; 
 }
 
-.navbar-brand {
+.navbar {
     color: #141414;
+    font-size: 2em; /* Updated to a more reasonable size */
     font-weight: bold;
     text-decoration: none;
     transition: color 0.3s;
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
 }
 
-.navbar-brand:hover {
-    color: #ccc;
+.navbar:hover {
+    color: #c1b5b5;
 }
 
 .navbar-toggler {
@@ -22,10 +24,12 @@
     align-content: center;
     color: #1e1e1e;
     transition: color 0.2s;
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
+    font-size: 1rem; /* Standard size for better readability */
 }
 
 .nav-link:hover {
-    color: #cbd3da;
+    color: #d40000;
 }
 
 .auth-buttons {
@@ -39,11 +43,12 @@
 
 .offcanvas-title {
     color: #004085;
-    font-size: 1.25rem;
+    font-size: 1.5rem; /* Enhanced size for header titles */
 }
 
 .offcanvas-body .nav-link {
     padding-bottom: 0.625rem; 
+    font-size: 1.2rem; /* Slightly larger for better readability in offcanvas menu */
 }
 
 .logout-button {
@@ -54,6 +59,8 @@
     padding: 0.5rem 0.75rem; 
     border-radius: 0.3125rem; 
     transition: background-color 0.3s;
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
+    font-size: 1.2rem; /* Larger size for better visibility and accessibility */
 }
 
 .logout-button:hover {
