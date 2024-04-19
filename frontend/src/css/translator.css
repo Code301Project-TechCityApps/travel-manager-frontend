@@ -1,22 +1,26 @@
-.translated-box {
-  border: 2px solid #ccc; /* Border color */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px; /* Padding inside the box */
-  background-color: #f9f9f9; /* Background color */
-  margin-top: 20px; /* Margin from the top */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-  max-width: 100%; /* Maximum width */
-  /* overflow-wrap: break-word; Break long words */
-  /* word-wrap:break-word; */
-  white-space:pre-wrap;
-  height: 250px;
-  display: flex;
-  font-size: x-large;
-  text-align: left;
-} 
+.translator-card {
+  width: 100%; /* Ensures consistent width */
+}
 
-  
- 
+.translated-box {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Responsive width */
+  white-space: pre-wrap; /* Ensures whitespace and line breaks are preserved */
+  height: 250px;
+  font-size: 1rem; /* Base font size */
+  text-align: left; /* Ensures text aligns left */
+}
+
+.button-center {
+  display: block; /* Make the button a block to fill width */
+  width: fit-content; /* Only as wide as necessary */
+  margin: 20px auto; /* Center horizontally and 20px margin-top */
+}
 
 
 
