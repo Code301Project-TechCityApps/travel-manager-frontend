@@ -5,7 +5,7 @@ import { Table } from 'react-bootstrap';
 import FlightForm from './FlightForm';
 
 // Set the API URL to your server endpoint where flight details are submitted
-const API_URL = 'http://localhost:3000/api/flightDetails'; // Adjust if necessary
+const API_URL = import.meta.env.VITE_SERVER_URL;
 
 function Flights() {
     const [flights, setFlights] = useState([]);
@@ -14,7 +14,7 @@ function Flights() {
     // Fetch all flights
     const fetchFlights = async () => {
         try {
-            const response = await axios.get(API_URL);
+            const response = await axios.get(`${API_URL}/api/flightDetails`);
             setFlights(response.data);
             // Optionally set lastSubmitted to the last in the fetched list if it makes sense for your app
             if (response.data.length > 0) {
@@ -28,7 +28,7 @@ function Flights() {
     // Re-fetch flights after a new submission
     const submitFlightDetails = async (flightDetails) => {
         try {
-            const response = await axios.post(API_URL, flightDetails);
+            const response = await axios.post(`${API_URL}/api/flightDetails`, flightDetails);
             fetchFlights();  // Refresh the list of flights after posting
             setLastSubmitted(flightDetails);  // Update lastSubmitted to reflect the newly submitted details
             return response.data;

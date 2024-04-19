@@ -3,6 +3,7 @@ import { TileLayer, Marker, Popup } from 'react-leaflet';
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 
 const API_KEY = import.meta.env.VITE_LOCATION_IQ_KEY;
+const API = import.meta.env.VITE_SERVER_URL;
 
 function TransportationSearch() {
     const [fromLocation, setFromLocation] = useState('');
@@ -36,7 +37,7 @@ function TransportationSearch() {
         setLocation(fromCoords);
 
         try {
-            const response = await fetch(`http://localhost:3000/api/transportation/traveldata?lat=${fromCoords.lat}&lng=${fromCoords.lon}&name=${fromLocation}`);
+            const response = await fetch(`${API}/api/transportation/traveldata?lat=${fromCoords.lat}&lng=${fromCoords.lon}&name=${fromLocation}`);
             if (!response.ok) {
                 throw new Error('Error fetching transportation data');
             }
